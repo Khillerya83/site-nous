@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Toi ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            animation: float 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            opacity: 0.9;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+
+        .counter {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+
+        .counter-number {
+            font-size: 2.5em;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .message-list {
+            margin-top: 30px;
+        }
+
+        .message-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .message-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(10px);
+        }
+
+        .message-date {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .message-text {
+            font-size: 1.2em;
+        }
+
+        .message-box {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .message-box input,
+        .message-box textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1em;
+            font-family: 'Georgia', serif;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .message-box textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+        .status.info {
+            background: rgba(33, 150, 243, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 1.2em;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Pour Toi, Mon Amour ❤️</h1>
+        <p class="subtitle">Notre espace partagé</p>
+    </header>
+
+    <div class="container">
+        <div id="statusMessage" class="status" style="display: none;"></div>
+
+        <div class="section">
+            <h2>Notre Compteur d'Amour</h2>
+            <div class="counter">
+                Ensemble depuis<br>
+                <span class="counter-number" id="daysTogether">0</span> jours
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p style="margin-bottom: 15px; font-size: 1.1em;">📅 Définir notre date de début :</p>
+                <input type="date" id="startDate" style="padding: 10px; border-radius: 10px; border: none; font-size: 1em; margin-right: 10px;">
+                <button class="btn" onclick="saveStartDate()">💾 Sauvegarder</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Nos Messages d'Amour 💌</h2>
+            <div class="message-box">
+                <input type="text" id="authorName" placeholder="Ton prénom..." maxlength="30">
+                <textarea id="messageText" placeholder="Écris ton message d'amour ici..."></textarea>
+                <button class="btn" onclick="addMessage()">💖 Envoyer le message</button>
+            </div>
+            <div class="loading" id="messagesLoading">Chargement des messages...</div>
+            <div class="message-list" id="messagesList"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Fait avec tout mon amour ❤️</p>
+        <p>Pour toi, aujourd'hui et toujours 💕</p>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // ⚠️ IMPORTANT : Remplacez cette configuration par VOTRE configuration Firebase
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, push, onValue, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // 🔥 CONFIGURATION FIREBASE - À REMPLACER PAR LA VÔTRE
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlnTrqwUyEL2c-wymJXxKL05N2Twcwv4w",
+            authDomain: "site-amour-92308.firebaseapp.com",
+            databaseURL: "https://site-amour-92308-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "site-amour-92308",
+            storageBucket: "site-amour-92308.firebasestorage.app",
+            messagingSenderId: "607113419155",
+            appId: "1:607113419155:web:6851a0fdc2c0fd38337066"
+        };
+
+        // Initialiser Firebase
+        let app, database;
+        try {
+            app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+            showStatus('✅ Connecté à Firebase !', 'success');
+            loadData();
+        } catch (error) {
+            showStatus('❌ Erreur de connexion Firebase. Vérifiez votre configuration.', 'error');
+            console.error('Erreur Firebase:', error);
+        }
+
+        // Fonction pour afficher des messages de statut
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 4000);
+        }
+
+        // Charger les données au démarrage
+        function loadData() {
+            loadStartDate();
+            loadMessages();
+        }
+
+        // Charger la date de début
+        function loadStartDate() {
+            const startDateRef = ref(database, 'relationData/startDate');
+            onValue(startDateRef, (snapshot) => {
+                const date = snapshot.val();
+                if (date) {
+                    document.getElementById('startDate').value = date;
+                    updateDaysCounter(date);
+                }
+            });
+        }
+
+        // Sauvegarder la date de début
+        window.saveStartDate = async function() {
+            const dateInput = document.getElementById('startDate').value;
+            if (!dateInput) {
+                showStatus('⚠️ Veuillez sélectionner une date', 'error');
+                return;
+            }
+
+            try {
+                const startDateRef = ref(database, 'relationData/startDate');
+                await set(startDateRef, dateInput);
+                showStatus('💾 Date sauvegardée avec succès !', 'success');
+                updateDaysCounter(dateInput);
+            } catch (error) {
+                showStatus('❌ Erreur lors de la sauvegarde', 'error');
+                console.error(error);
+            }
+        };
+
+        // Mettre à jour le compteur de jours
+        function updateDaysCounter(startDate) {
+            const start = new Date(startDate);
+            const today = new Date();
+            const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+            
+            if (diff >= 0) {
+                let count = 0;
+                const interval = setInterval(() => {
+                    count++;
+                    document.getElementById('daysTogether').textContent = count;
+                    if (count >= diff) clearInterval(interval);
+                }, 20);
+            }
+        }
+
+        // Charger les messages
+        function loadMessages() {
+            document.getElementById('messagesLoading').style.display = 'block';
+            const messagesRef = ref(database, 'messages');
+            
+            onValue(messagesRef, (snapshot) => {
+                document.getElementById('messagesLoading').style.display = 'none';
+                const messages = snapshot.val();
+                const messagesList = document.getElementById('messagesList');
+                messagesList.innerHTML = '';
+
+                if (messages) {
+                    // Convertir en tableau et trier par date (plus récent en premier)
+                    const messagesArray = Object.entries(messages).map(([key, value]) => ({
+                        id: key,
+                        ...value
+                    }));
+                    messagesArray.sort((a, b) => b.timestamp - a.timestamp);
+
+                    messagesArray.forEach(msg => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message-item';
+                        
+                        const date = new Date(msg.timestamp);
+                        const dateStr = date.toLocaleDateString('fr-FR', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+
+                        messageDiv.innerHTML = `
+                            <div class="message-date">💖 ${msg.author} - ${dateStr}</div>
+                            <div class="message-text">${msg.text}</div>
+                        `;
+                        messagesList.appendChild(messageDiv);
+                    });
+                } else {
+                    messagesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun message pour le moment. Soyez le premier à écrire ! 💌</p>';
+                }
+            });
+        }
+
+        // Ajouter un message
+        window.addMessage = async function() {
+            const author = document.getElementById('authorName').value.trim();
+            const text = document.getElementById('messageText').value.trim();
+
+            if (!author || !text) {
+                showStatus('⚠️ Veuillez remplir tous les champs', 'error');
+                return;
+            }
+
+            try {
+                const messagesRef = ref(database, 'messages');
+                const newMessageRef = push(messagesRef);
+                
+                await set(newMessageRef, {
+                    author: author,
+                    text: text,
+                    timestamp: Date.now()
+                });
+
+                document.getElementById('messageText').value = '';
+                showStatus('💌 Message envoyé avec amour !', 'success');
+            } catch (error) {
+                showStatus('❌ Erreur lors de l\'envoi du message', 'error');
+                console.error(error);
+            }
+        };
+
+        // Créer des cœurs flottants
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 7000);
+        }
+
+        setInterval(createHeart, 1500);
+    </script>
+</body>
+</html>
