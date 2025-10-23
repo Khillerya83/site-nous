@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ma Valentine 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #ff8fab 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animation de fond */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 107, 157, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(192, 108, 132, 0.2) 0%, transparent 50%);
+            animation: bgMove 15s ease-in-out infinite;
+        }
+
+        @keyframes bgMove {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        /* Particules de coeurs */
+        .heart {
+            position: fixed;
+            font-size: 25px;
+            animation: float 5s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1); 
+                opacity: 0; 
+            }
+            10% { opacity: 1; }
+            50% { transform: translateY(-50vh) rotate(180deg) scale(1.2); }
+            90% { opacity: 1; }
+            100% { 
+                transform: translateY(-100vh) rotate(360deg) scale(0.8); 
+                opacity: 0; 
+            }
+        }
+
+        /* Container principal */
+        .container {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.2) 0%, 
+                rgba(255, 255, 255, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 70px 50px;
+            text-align: center;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 
+                0 30px 80px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+            animation: slideIn 0.8s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Effet brillant sur le container */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 25%, 
+                transparent 50%, 
+                rgba(255, 255, 255, 0.3) 75%, 
+                transparent 100%);
+            border-radius: 40px;
+            z-index: -1;
+            animation: shine 3s linear infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 
+                3px 3px 15px rgba(0,0,0,0.4),
+                0 0 30px rgba(255, 215, 0, 0.6);
+            animation: titlePulse 2s ease-in-out infinite;
+            background: linear-gradient(45deg, #fff, #ffd700, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradient 3s ease infinite, titlePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .question {
+            font-size: 2.2em;
+            margin: 40px 0;
+            line-height: 1.6;
+            font-weight: 600;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            animation: questionFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes questionFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Boutons stylés */
+        .buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 50px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 22px 55px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 
+                0 10px 35px rgba(245, 87, 108, 0.5),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3);
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 400px;
+            height: 400px;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 
+                0 20px 50px rgba(245, 87, 108, 0.7),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                inset 0 2px 5px rgba(255, 255, 255, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-4px) scale(1.05);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 
+                0 10px 35px rgba(118, 75, 162, 0.5),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                inset 0 2px 5px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-no:hover {
+            box-shadow: 
+                0 20px 50px rgba(118, 75, 162, 0.7),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                inset 0 2px 5px rgba(255, 255, 255, 0.4);
+        }
+
+        /* Zone de réponse */
+        #response {
+            margin-top: 40px;
+            font-size: 2em;
+            min-height: 80px;
+            animation: fadeIn 1s ease;
+            font-weight: 600;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.5;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: scale(0.8) translateY(20px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            }
+        }
+
+        #response a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        #response a:hover {
+            background: rgba(255, 215, 0, 0.4);
+            transform: scale(1.1);
+        }
+
+        /* Bouton retour stylé */
+        .back-btn {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.15));
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 15px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.15em;
+            transition: all 0.3s ease;
+            z-index: 10;
+            font-weight: 600;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.4), 
+                rgba(255, 255, 255, 0.25));
+            transform: translateX(-8px) scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Effet confetti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            animation: confettiFall 3s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 50px 30px;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .question {
+                font-size: 1.6em;
+            }
+
+            .btn {
+                padding: 18px 40px;
+                font-size: 1.3em;
+            }
+
+            .back-btn {
+                top: 20px;
+                left: 20px;
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+        }
+
+        /* Animation spéciale pour le OUI */
+        .celebration {
+            animation: celebrate 1s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.2) rotate(-10deg); }
+            75% { transform: scale(1.2) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Retour</button>
+
+    <div class="container" id="mainContainer">
+        <h1>💝 Question Spéciale 💝</h1>
+        <p class="subtitle">Une question qui me tient vraiment à cœur...</p>
+        <div class="question">
+            Veux-tu être ma Valentine ? 🌹
+        </div>
+        <div class="buttons">
+            <button class="btn" onclick="valentineYes()">
+                <span>💖 OUI !</span>
+            </button>
+            <button class="btn btn-no" onclick="valentineNo()">
+                <span>😢 Non</span>
+            </button>
+        </div>
+        <div id="response"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, push } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // 🔥 CONFIG FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlnTrqwUyEL2c-wymJXxKL05N2Twcwv4w",
+            authDomain: "site-amour-92308.firebaseapp.com",
+            databaseURL: "https://site-amour-92308-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "site-amour-92308",
+            storageBucket: "site-amour-92308.firebasestorage.app",
+            messagingSenderId: "607113419155",
+            appId: "1:607113419155:web:6851a0fdc2c0fd38337066"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Créer des coeurs flottants
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 8000);
+        }
+
+        // Créer des confettis
+        function createConfetti() {
+            const colors = ['#ffd700', '#ff69b4', '#ff1493', '#00ff00', '#00bfff', '#ff6347'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Fonction pour le bouton OUI
+        window.valentineYes = async function() {
+            const responseDiv = document.getElementById('response');
+            const container = document.getElementById('mainContainer');
+            
+            // Animation du container
+            container.classList.add('celebration');
+            
+            responseDiv.innerHTML = '🎉💕 YOUPI ! Elle a dit OUI ! 💕🎉';
+            
+            // Pluie de coeurs intensive
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => createHeart(), i * 50);
+            }
+            
+            // Confettis
+            createConfetti();
+            
+            // Envoyer un message dans Firebase
+            try {
+                const messagesRef = ref(database, 'messages');
+                const newMessageRef = push(messagesRef);
+                
+                await set(newMessageRef, {
+                    author: 'Ta Valentine 💖',
+                    text: 'OUI ! Je veux être ta Valentine ! 🌹💕 Je t\'aime mon amour !',
+                    timestamp: Date.now()
+                });
+                
+                setTimeout(() => {
+                    responseDiv.innerHTML += '<br><br>💌 Message d\'amour envoyé sur notre site !<br><a href="index.html">✨ Retour au site →</a>';
+                }, 2500);
+            } catch (error) {
+                console.error('Erreur:', error);
+                setTimeout(() => {
+                    responseDiv.innerHTML += '<br><br><a href="index.html">✨ Retour au site →</a>';
+                }, 2500);
+            }
+        };
+
+        // Fonction pour le bouton NON
+        window.valentineNo = function() {
+            if (confirm('😱 Tu es vraiment sûre ? Je vais me prendre un râteau là...')) {
+                // Petit message avant la redirection
+                const responseDiv = document.getElementById('response');
+                responseDiv.innerHTML = '💔 Direction Amazon... pour un vrai râteau ! 😅';
+                
+                setTimeout(() => {
+                    window.location.href = 'https://www.amazon.fr/KADAX-R%C3%A2teau-manche-parterre-araign%C3%A9e/dp/B084VNBC9D/ref=sr_1_2_sspa?dib=eyJ2IjoiMSJ9.eJHYB-vtL3c-Qpw8Ph7hv5H2hFBOHjjzBlMyMCq3qsYzX1zUm7Aj1BNUzc2sBA5kCmuB2GR1-OqkObx6t30dR41nj8J-5ZilaK38WpvNRpFHpdgE7tTwud8FElMlr14nsPXoN-bmNuvocKCJwOcpOfVR8aScPX0JGoH5uPJZFtT2iUMGh82YIXKkU51-tRWCLD0qu-KC_75LUef4wiJuk6ltVT40X3AGq0BrHy57SRZb5B5dXF6bFNDGexv_GhSvlKmiPE1s1LvkrFqrjGDUOXdJ2NatqulA4LYLpxpupHI.K5_EkJWWRgdjHcjMnBp4cAxXlMcn4Rc9_FyV6b5HONg&dib_tag=se&keywords=rateau&qid=1761247265&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1';
+                }, 1500);
+            }
+        };
+
+        // Coeurs d'ambiance au démarrage
+        setInterval(createHeart, 1200);
+        
+        // Créer quelques coeurs au chargement
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createHeart, i * 300);
+        }
+    </script>
+</body>
+</html>
