@@ -231,7 +231,7 @@
             <h2>Notre Compteur d'Amour</h2>
             <div class="counter">
                 Ensemble depuis<br>
-                <span class="counter-number" id="daysTogether">0</span> jours
+                <span class="counter-number" id="daysTogether">10</span> jours
             </div>
             <div style="text-align: center; margin-top: 20px;">
                 <p style="margin-bottom: 15px; font-size: 1.1em;">📅 Définir notre date de début :</p>
@@ -303,17 +303,19 @@
             loadMessages();
         }
 
-        // Charger la date de début
         function loadStartDate() {
-            const startDateRef = ref(database, 'relationData/startDate');
-            onValue(startDateRef, (snapshot) => {
-                const date = snapshot.val();
-                if (date) {
-                    document.getElementById('startDate').value = date;
-                    updateDaysCounter(date);
-                }
-            });
+    const startDateRef = ref(database, 'relationData/startDate');
+    onValue(startDateRef, (snapshot) => {
+        const date = snapshot.val();
+        if (date) {
+            document.getElementById('startDate').value = date;
+            updateDaysCounter(date);
+        } else {
+            document.getElementById('daysTogether').textContent = "0";
         }
+    });
+}
+
 
         // Sauvegarder la date de début
         window.saveStartDate = async function() {
@@ -334,21 +336,30 @@
             }
         };
 
-        // Mettre à jour le compteur de jours
         function updateDaysCounter(startDate) {
-            const start = new Date(startDate);
-            const today = new Date();
-            const diff = Math.floor((today - start) / (1000 * 60 * 60 * 24));
-            
-            if (diff >= 0) {
-                let count = 0;
-                const interval = setInterval(() => {
-                    count++;
-                    document.getElementById('daysTogether').textContent = count;
-                    if (count >= diff) clearInterval(interval);
-                }, 20);
-            }
-        }
+    const start = new Date(startDate);
+    const today = new Date();
+
+    // Calcul du nombre de jours entre les deux dates
+    const diffTime = today.getTime() - start.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    const counterEl = document.getElementById('daysTogether');
+
+    // Animation du compteur (effet de comptage progressif)
+    let count = 0;
+    const interval = setInterval(() => {
+        count++;
+        counterEl.textContent = count;
+        if (count >= diffDays) clearInterval(interval);
+    }, 15);
+
+    // Si jamais la date est dans le futur
+    if (diffDays < 0) {
+        counterEl.textContent = "0";
+    }
+}
+
 
         // Charger les messages
         function loadMessages() {
