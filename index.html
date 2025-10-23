@@ -215,7 +215,46 @@
             text-align: center;
             padding: 20px;
             font-size: 1.2em;
+        
         }
+        .event-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.event-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(10px);
+}
+
+.event-info {
+    flex: 1;
+}
+
+.event-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.event-date {
+    font-size: 1em;
+    opacity: 0.8;
+}
+
+.countdown {
+    text-align: right;
+    font-size: 1.5em;
+    color: #ffd700;
+    font-weight: bold;
+}
     </style>
 </head>
 <body>
@@ -251,6 +290,29 @@
             <div class="message-list" id="messagesList"></div>
         </div>
     </div>
+
+    <div class="section">
+    <h2>Nos Souvenirs 📸</h2>
+    <div class="message-box">
+        <input type="text" id="memoryTitle" placeholder="Titre du souvenir..." maxlength="50">
+        <input type="date" id="memoryDate">
+        <textarea id="memoryDesc" placeholder="Décris ce souvenir..."></textarea>
+        <button class="btn" onclick="addMemory()">✨ Ajouter le souvenir</button>
+    </div>
+    <div class="loading" id="memoriesLoading">Chargement des souvenirs...</div>
+    <div class="gallery" id="memoriesList"></div>
+</div>
+
+<div class="section">
+    <h2>Nos Événements Importants 🎉</h2>
+    <div class="message-box">
+        <input type="text" id="eventTitle" placeholder="Titre de l'événement..." maxlength="50">
+        <input type="date" id="eventDate">
+        <button class="btn" onclick="addEvent()">🎊 Ajouter l'événement</button>
+    </div>
+    <div class="loading" id="eventsLoading">Chargement des événements...</div>
+    <div id="eventsList"></div>
+</div>
 
     <footer>
         <p>Fait avec tout mon amour ❤️</p>
@@ -301,6 +363,8 @@
         function loadData() {
             loadStartDate();
             loadMessages();
+            loadMemories();
+            loadEvents();
         }
 
         function loadStartDate() {
@@ -433,6 +497,96 @@
             }
         };
 
+        // Charger les souvenirs
+function loadMemories() {
+    document.getElementById('memoriesLoading').style.display = 'block';
+    const memoriesRef = ref(database, 'memories');
+    
+    onValue(memoriesRef, (snapshot) => {
+        document.getElementById('memoriesLoading').style.display = 'none';
+        const memories = snapshot.val();
+        const memoriesList = document.getElementById('memoriesList');
+        memoriesList.innerHTML = '';
+
+        if (memories) {
+            const memoriesArray = Object.entries(memories).map(([key, value]) => ({
+                id: key,
+                ...value
+            }));
+            memoriesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            memoriesArray.forEach(memory => {
+                const memoryDiv = document.createElement('div');
+                memoryDiv.className = 'memory-card';
+                
+                const date = new Date(memory.date);
+                const dateStr = date.toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                memoryDiv.innerHTML = `
+                    <button class="delete-btn" onclick="deleteMemory('${memory.id}')">×</button>
+                    <div class="memory-icon">📸</div>
+                    <div class="memory-title">${memory.title}</div>
+                    <div class="memory-date">${dateStr}</div>
+                    <div class="memory-desc">${memory.description}</div>
+                `;
+                memoriesList.appendChild(memoryDiv);
+            });
+        } else {
+            memoriesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun souvenir pour le moment. Ajoutez-en un ! 📸</p>';
+        }
+    });
+}
+
+// Ajouter un souvenir
+window.addMemory = async function() {
+    const title = document.getElementById('memoryTitle').value.trim();
+    const date = document.getElementById('memoryDate').value;
+    const desc = document.getElementById('memoryDesc').value.trim();
+
+    if (!title || !date || !desc) {
+        showStatus('⚠️ Veuillez remplir tous les champs', 'error');
+        return;
+    }
+
+    try {
+        const memoriesRef = ref(database, 'memories');
+        const newMemoryRef = push(memoriesRef);
+        
+        await set(newMemoryRef, {
+            title: title,
+            date: date,
+            description: desc,
+            timestamp: Date.now()
+        });
+
+        document.getElementById('memoryTitle').value = '';
+        document.getElementById('memoryDate').value = '';
+        document.getElementById('memoryDesc').value = '';
+        showStatus('✨ Souvenir ajouté avec succès !', 'success');
+    } catch (error) {
+        showStatus('❌ Erreur lors de l\'ajout du souvenir', 'error');
+        console.error(error);
+    }
+};
+
+// Supprimer un souvenir
+window.deleteMemory = async function(memoryId) {
+    if (!confirm('Voulez-vous vraiment supprimer ce souvenir ?')) return;
+    
+    try {
+        const memoryRef = ref(database, `memories/${memoryId}`);
+        await set(memoryRef, null);
+        showStatus('🗑️ Souvenir supprimé', 'info');
+    } catch (error) {
+        showStatus('❌ Erreur lors de la suppression', 'error');
+        console.error(error);
+    }
+};
+
         // Créer des cœurs flottants
         function createHeart() {
             const heart = document.createElement('div');
@@ -445,6 +599,109 @@
             
             setTimeout(() => heart.remove(), 7000);
         }
+        // Charger les événements
+function loadEvents() {
+    document.getElementById('eventsLoading').style.display = 'block';
+    const eventsRef = ref(database, 'events');
+    
+    onValue(eventsRef, (snapshot) => {
+        document.getElementById('eventsLoading').style.display = 'none';
+        const events = snapshot.val();
+        const eventsList = document.getElementById('eventsList');
+        eventsList.innerHTML = '';
+
+        if (events) {
+            const eventsArray = Object.entries(events).map(([key, value]) => ({
+                id: key,
+                ...value
+            }));
+            eventsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            eventsArray.forEach(event => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'event-item';
+                
+                const eventDate = new Date(event.date);
+                const today = new Date();
+                const diffTime = eventDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                let countdownText = '';
+                if (diffDays > 0) {
+                    countdownText = `Dans ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
+                } else if (diffDays === 0) {
+                    countdownText = "Aujourd'hui ! 🎉";
+                } else {
+                    countdownText = `Il y a ${Math.abs(diffDays)} jour${Math.abs(diffDays) > 1 ? 's' : ''}`;
+                }
+
+                const dateStr = eventDate.toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                eventDiv.innerHTML = `
+                    <div class="event-info">
+                        <div class="event-title">${event.title}</div>
+                        <div class="event-date">📅 ${dateStr}</div>
+                    </div>
+                    <div class="countdown">${countdownText}</div>
+                    <button class="delete-btn" onclick="deleteEvent('${event.id}')">×</button>
+                `;
+                eventsList.appendChild(eventDiv);
+            });
+        } else {
+            eventsList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun événement pour le moment. Ajoutez-en un ! 🎊</p>';
+        }
+    });
+}
+
+// Ajouter un événement
+window.addEvent = async function() {
+    const title = document.getElementById('eventTitle').value.trim();
+    const date = document.getElementById('eventDate').value;
+
+    if (!title || !date) {
+        showStatus('⚠️ Veuillez remplir tous les champs', 'error');
+        return;
+    }
+
+    try {
+        const eventsRef = ref(database, 'events');
+        const newEventRef = push(eventsRef);
+        
+        await set(newEventRef, {
+            title: title,
+            date: date,
+            timestamp: Date.now()
+        });
+
+        document.getElementById('eventTitle').value = '';
+        document.getElementById('eventDate').value = '';
+        showStatus('🎊 Événement ajouté avec succès !', 'success');
+    } catch (error) {
+        showStatus('❌ Erreur lors de l\'ajout de l\'événement', 'error');
+        console.error(error);
+    }
+};
+
+// Supprimer un événement
+window.deleteEvent = async function(eventId) {
+    if (!confirm('Voulez-vous vraiment supprimer cet événement ?')) return;
+    
+    try {
+        const eventRef = ref(database, `events/${eventId}`);
+        await set(eventRef, null);
+        showStatus('🗑️ Événement supprimé', 'info');
+    } catch (error) {
+        showStatus('❌ Erreur lors de la suppression', 'error');
+        console.error(error);
+    }
+};
+
+// Mettre à jour les comptes à rebours toutes les heures
+setInterval(loadEvents, 3600000);
 
         setInterval(createHeart, 1500);
     </script>
