@@ -5,55 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pour Toi ❤️</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
+        :root {
+            --primary: #FF1654;
+            --secondary: #247BA0;
+            --accent: #F3FFBD;
+            --dark: #1E1E24;
+            --light: #F7F7FF;
         }
 
-        /* Navigation fixe */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fond animé élégant */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.8;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 22, 84, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(36, 123, 160, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(243, 255, 189, 0.3) 0%, transparent 50%);
+            animation: bgRotate 20s linear infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particules flottantes sophistiquées */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 15s infinite;
+            z-index: 1;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation ultra moderne */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(20px);
-            padding: 15px 30px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px);
+            padding: 20px 50px;
             z-index: 1000;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-brand {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #ffd700;
-            z-index: 1001;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF1654, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Menu burger */
         .burger {
             display: none;
             flex-direction: column;
             cursor: pointer;
-            gap: 5px;
+            gap: 6px;
             z-index: 1001;
         }
 
         .burger span {
             width: 30px;
-            height: 3px;
+            height: 2px;
             background: white;
             border-radius: 5px;
             transition: all 0.3s ease;
@@ -73,108 +139,134 @@
 
         .nav-links {
             display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
         }
 
         .nav-link {
-            color: white;
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 20px;
+            font-size: 0.95em;
+            font-weight: 500;
+            position: relative;
             transition: all 0.3s ease;
-            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #FF1654, #F3FFBD);
+            transition: width 0.3s ease;
         }
 
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            color: #fff;
         }
 
-        /* Particules animées */
-        .heart {
-            position: fixed;
-            font-size: 20px;
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.7;
+        .nav-link:hover::after {
+            width: 100%;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        header {
+        /* Hero Section Premium */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 120px 20px 60px;
+            padding: 150px 20px 100px;
             position: relative;
             z-index: 2;
         }
 
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 15px rgba(0,0,0,0.4);
-            animation: fadeInDown 1s ease;
-            background: linear-gradient(45deg, #fff, #ffd700, #fff);
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #F3FFBD, #FF1654);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite;
+            line-height: 1.2;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 22, 84, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 22, 84, 0.8)); }
         }
 
-        .subtitle {
+        .hero p {
             font-size: 1.3em;
-            opacity: 0.9;
-            animation: fadeIn 2s ease;
-            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 2px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .hero-btn {
+            background: linear-gradient(135deg, #FF1654, #247BA0);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 40px rgba(255, 22, 84, 0.4);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 1px;
         }
 
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .hero-btn:hover::before {
+            left: 100%;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(255, 22, 84, 0.6);
+        }
+
+        /* Container Premium */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 80px 40px;
             position: relative;
             z-index: 2;
         }
 
-        /* Grid layout pour sections */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 25px;
-        }
-
+        /* Section Cards Ultra Premium */
         .section {
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 35px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .section::before {
@@ -182,99 +274,165 @@
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f093fb, #ffd700, #f5576c);
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 22, 84, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .section:hover::before {
+            opacity: 1;
         }
 
         .section:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
-        }
-
-        .section-full {
-            grid-column: 1 / -1;
+            transform: translateY(-10px);
+            border-color: rgba(255, 22, 84, 0.5);
+            box-shadow: 0 20px 60px rgba(255, 22, 84, 0.3);
         }
 
         h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #ffd700;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
         }
 
-        h2::before {
-            content: '';
-            width: 5px;
-            height: 30px;
-            background: linear-gradient(180deg, #f093fb, #f5576c);
-            border-radius: 10px;
+        /* Grid Layout Sophistiqué */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
         }
 
-        /* Compteur stylé */
-        .counter {
+        /* Compteur Premium */
+        .counter-box {
             text-align: center;
-            font-size: 1.3em;
-            margin: 25px 0;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(245, 87, 108, 0.2));
-            border-radius: 20px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 22, 84, 0.15), rgba(36, 123, 160, 0.15));
+            border-radius: 25px;
+            border: 2px solid rgba(255, 22, 84, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .counter-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent,
+                rgba(255, 22, 84, 0.3),
+                transparent 30%
+            );
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .counter-box::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: rgba(10, 10, 10, 0.9);
+            border-radius: 23px;
+            z-index: 1;
+        }
+
+        .counter-content {
+            position: relative;
+            z-index: 2;
         }
 
         .counter-number {
-            font-size: 3.5em;
-            color: #ffd700;
-            font-weight: bold;
+            font-size: 5em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF1654, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
-            margin: 15px 0;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            margin: 20px 0;
+            font-family: 'Playfair Display', serif;
         }
 
-        /* Inputs modernes */
-        .message-box input,
-        .message-box textarea {
+        .counter-label {
+            font-size: 1.2em;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* Input Fields Premium */
+        .input-group {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 5;
+        }
+
+        .input-group input,
+        .input-group textarea {
             width: 100%;
-            padding: 14px 18px;
-            border-radius: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 18px 25px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             font-size: 1em;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: rgba(255, 255, 255, 0.95);
-            color: #333;
-            margin-bottom: 12px;
+            color: #0a0a0a;
+            margin-bottom: 20px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
         }
 
-        .message-box input:focus,
-        .message-box textarea:focus {
+        .input-group input::placeholder,
+        .input-group textarea::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
             outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-            transform: scale(1.02);
+            border-color: #FF1654;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 30px rgba(255, 22, 84, 0.3);
         }
 
-        .message-box textarea {
+        .input-group textarea {
             min-height: 120px;
             resize: vertical;
         }
 
-        /* Boutons modernes */
+        /* Buttons Premium */
         .btn {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: linear-gradient(135deg, #FF1654, #247BA0);
             color: white;
             border: none;
-            padding: 14px 35px;
+            padding: 16px 40px;
             font-size: 1.05em;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
             font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 30px rgba(255, 22, 84, 0.4);
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.5px;
         }
 
         .btn::before {
@@ -291,122 +449,180 @@
         }
 
         .btn:hover::before {
-            width: 300px;
-            height: 300px;
+            width: 400px;
+            height: 400px;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.6);
+            box-shadow: 0 12px 40px rgba(255, 22, 84, 0.6);
         }
 
-        .btn:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-valentine {
-            background: linear-gradient(135deg, #ff6b9d, #c06c84);
-            padding: 18px 45px;
-            font-size: 1.2em;
-            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.5);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        /* Cards pour messages/souvenirs */
-        .message-item, .todo-item, .event-item {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-            padding: 20px;
-            margin: 12px 0;
-            border-radius: 15px;
+        /* Message Cards Premium */
+        .message-card,
+        .todo-card,
+        .event-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border-left: 4px solid #FF1654;
             transition: all 0.3s ease;
-            border-left: 4px solid #ffd700;
             position: relative;
         }
 
-        .message-item:hover, .todo-item:hover, .event-item:hover {
-            background: rgba(255, 255, 255, 0.22);
-            transform: translateX(8px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        .message-card:hover,
+        .todo-card:hover,
+        .event-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .message-date {
-            font-size: 0.85em;
-            opacity: 0.85;
-            margin-bottom: 8px;
-            color: #ffd700;
+        .message-author {
+            font-size: 0.9em;
+            color: #FF1654;
             font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .message-text {
             font-size: 1.1em;
-            line-height: 1.6;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Galerie grid */
-        .gallery {
+        /* Memory Grid Premium */
+        .memory-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
         }
 
         .memory-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.1));
-            border-radius: 18px;
-            padding: 25px;
-            transition: all 0.4s ease;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 35px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .memory-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 22, 84, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .memory-card:hover::before {
+            opacity: 1;
+            animation: rotate 3s linear infinite;
         }
 
         .memory-card:hover {
-            transform: translateY(-10px) rotate(2deg);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-            border-color: #ffd700;
+            transform: translateY(-15px) rotate(2deg);
+            border-color: #FF1654;
+            box-shadow: 0 20px 60px rgba(255, 22, 84, 0.4);
         }
 
         .memory-icon {
-            font-size: 3.5em;
-            text-align: center;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+            font-size: 4em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255, 22, 84, 0.6));
         }
 
         .memory-title {
-            font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #ffd700;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #F3FFBD;
         }
 
         .memory-date {
             font-size: 0.9em;
-            opacity: 0.8;
-            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
         }
 
         .memory-desc {
-            margin-top: 12px;
-            font-size: 0.95em;
-            line-height: 1.5;
+            font-size: 1em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Bouton delete amélioré */
+        /* Event Cards Premium */
+        .event-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 35px;
+            border-left: 4px solid #247BA0;
+        }
+
+        .event-title {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .event-date {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .countdown {
+            font-size: 2em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF1654, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            min-width: 180px;
+            text-align: right;
+        }
+
+        /* Todo List Premium */
+        .todo-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .todo-checkbox {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            accent-color: #FF1654;
+        }
+
+        .todo-text {
+            flex: 1;
+            font-size: 1.15em;
+        }
+
+        .todo-card.completed {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+
+        /* Delete Button Premium */
         .delete-btn {
             position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(244, 67, 54, 0.85);
-            border: none;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 22, 84, 0.2);
+            border: 2px solid #FF1654;
             color: white;
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 1.3em;
@@ -414,87 +630,48 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            z-index: 10;
         }
 
         .delete-btn:hover {
-            background: rgba(244, 67, 54, 1);
-            transform: scale(1.15) rotate(90deg);
-            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.5);
+            background: #FF1654;
+            transform: scale(1.2) rotate(90deg);
+            box-shadow: 0 5px 20px rgba(255, 22, 84, 0.5);
         }
 
-        /* Événements */
-        .event-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 22px;
-        }
-
-        .event-info {
-            flex: 1;
-        }
-
-        .event-title {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        .event-date {
-            font-size: 0.95em;
-            opacity: 0.85;
-        }
-
-        .countdown {
-            text-align: right;
-            font-size: 1.6em;
-            color: #ffd700;
-            font-weight: bold;
-            min-width: 150px;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Todo list */
-        .todo-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 18px;
-        }
-
-        .todo-item.completed {
-            opacity: 0.5;
-            text-decoration: line-through;
-        }
-
-        .todo-checkbox {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            accent-color: #ffd700;
-        }
-
-        .todo-text {
-            flex: 1;
-            font-size: 1.1em;
-        }
-
-        /* Status messages */
+        /* Status Messages Premium */
         .status {
             text-align: center;
-            padding: 16px;
-            margin: 20px 0;
-            border-radius: 15px;
-            font-size: 1.05em;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 20px;
+            font-size: 1.1em;
             font-weight: 600;
             animation: slideDown 0.5s ease;
+            border: 2px solid;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.6);
+            color: #4caf50;
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.6);
+            color: #f44336;
+        }
+
+        .status.info {
+            background: rgba(33, 150, 243, 0.2);
+            border-color: rgba(33, 150, 243, 0.6);
+            color: #2196f3;
         }
 
         @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -502,33 +679,21 @@
             }
         }
 
-        .status.success {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.4), rgba(76, 175, 80, 0.2));
-            border: 2px solid rgba(76, 175, 80, 0.6);
-        }
-
-        .status.error {
-            background: linear-gradient(135deg, rgba(244, 67, 54, 0.4), rgba(244, 67, 54, 0.2));
-            border: 2px solid rgba(244, 67, 54, 0.6);
-        }
-
-        .status.info {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.4), rgba(33, 150, 243, 0.2));
-            border: 2px solid rgba(33, 150, 243, 0.6);
-        }
-
+        /* Footer Premium */
         footer {
             text-align: center;
-            padding: 50px 20px;
-            font-size: 1.1em;
-            opacity: 0.9;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
         }
 
         .loading {
             text-align: center;
-            padding: 20px;
-            font-size: 1.1em;
-            opacity: 0.8;
+            padding: 30px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Responsive */
@@ -539,170 +704,176 @@
 
             .nav-links {
                 position: fixed;
-                top: 70px;
+                top: 80px;
                 right: -100%;
-                background: rgba(0, 0, 0, 0.95);
-                backdrop-filter: blur(20px);
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(30px);
                 flex-direction: column;
-                width: 250px;
-                padding: 30px 20px;
-                gap: 15px;
-                border-radius: 20px 0 0 20px;
-                box-shadow: -5px 5px 30px rgba(0, 0, 0, 0.5);
-                transition: right 0.4s ease;
+                width: 300px;
+                padding: 40px 30px;
+                gap: 30px;
+                border-radius: 30px 0 0 30px;
+                box-shadow: -10px 10px 50px rgba(0, 0, 0, 0.7);
+                transition: right 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+                border-left: 2px solid rgba(255, 22, 84, 0.3);
             }
 
             .nav-links.active {
                 right: 0;
             }
 
-            .nav-link {
-                width: 100%;
-                text-align: center;
-                padding: 12px;
-                font-size: 1.1em;
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5em;
+            .hero h1 {
+                font-size: 3em;
             }
 
-            .grid {
-                grid-template-columns: 1fr;
+            .hero p {
+                font-size: 1em;
             }
 
-            .event-item {
+            .navbar {
+                padding: 15px 25px;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .section {
+                padding: 30px 20px;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .event-card {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
             .countdown {
                 text-align: left;
-                margin-top: 10px;
-            }
-
-            header {
-                padding: 100px 20px 40px;
-            }
-        }
-
-        /* Animation d'entrée pour les éléments */
-        .fade-in {
-            animation: fadeInUp 0.6s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+                margin-top: 15px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="bg-animation"></div>
+
+    <!-- Particules -->
+    <script>
+        for(let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="nav-brand">❤️ Notre Espace</div>
+        <div class="nav-brand">Notre Histoire</div>
         <div class="burger" id="burger">
             <span></span>
             <span></span>
             <span></span>
         </div>
         <div class="nav-links" id="navLinks">
-            <a href="#compteur" class="nav-link">💑 Compteur</a>
-            <a href="#messages" class="nav-link">💌 Messages</a>
-            <a href="#souvenirs" class="nav-link">📸 Souvenirs</a>
-            <a href="#evenements" class="nav-link">🎉 Événements</a>
-            <a href="#dates" class="nav-link">💭 Idées</a>
+            <a href="#compteur" class="nav-link">Compteur</a>
+            <a href="#messages" class="nav-link">Messages</a>
+            <a href="#souvenirs" class="nav-link">Souvenirs</a>
+            <a href="#evenements" class="nav-link">Événements</a>
+            <a href="#dates" class="nav-link">Idées</a>
         </div>
     </nav>
 
-    <header>
-        <h1>Pour Toi, Mon Amour ❤️</h1>
-        <p class="subtitle">Notre espace partagé, nos souvenirs précieux</p>
-        <button class="btn btn-valentine" onclick="window.location.href='valentine.html'">
-            💝 Notre App Saint-Valentin 💝
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Pour Toi, Mon Amour</h1>
+        <p>Notre espace unique, nos moments précieux</p>
+        <button class="hero-btn" onclick="window.location.href='valentine.html'">
+            💝 Notre Saint-Valentin
         </button>
-    </header>
+    </section>
 
+    <!-- Main Content -->
     <div class="container">
         <div id="statusMessage" class="status" style="display: none;"></div>
 
         <!-- Compteur -->
-        <div class="grid">
-            <div class="section section-full fade-in" id="compteur">
-                <h2>Notre Compteur d'Amour</h2>
-                <div class="counter">
-                    Ensemble depuis
-                    <span class="counter-number" id="daysTogether">10</span>
-                    jours merveilleux 💫
-                </div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <input type="date" id="startDate" style="padding: 12px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.3); font-size: 1em; margin-right: 10px; background: rgba(255,255,255,0.95);">
-                    <button class="btn" onclick="saveStartDate()">💾 Sauvegarder la date</button>
+        <section class="section" id="compteur">
+            <h2>Notre Compteur d'Amour</h2>
+            <div class="counter-box">
+                <div class="counter-content">
+                    <span class="counter-label">Ensemble depuis</span>
+                    <span class="counter-number" id="daysTogether">0</span>
+                    <span class="counter-label">jours merveilleux</span>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Messages et Souvenirs côte à côte -->
+        <!-- Messages et Idées -->
         <div class="grid">
-            <div class="section fade-in" id="messages">
-                <h2>Messages d'Amour 💌</h2>
-                <div class="message-box">
-                    <input type="text" id="authorName" placeholder="Ton prénom..." maxlength="30">
-                    <textarea id="messageText" placeholder="Écris ton message d'amour ici..."></textarea>
-                    <button class="btn" onclick="addMessage()">💖 Envoyer</button>
+            <section class="section" id="messages">
+                <h2>Messages d'Amour</h2>
+                <div class="input-group">
+                    <input type="text" id="authorName" placeholder="Ton prénom...">
+                    <textarea id="messageText" placeholder="Écris ton message d'amour..."></textarea>
+                    <button class="btn" onclick="addMessage()">Envoyer le message</button>
                 </div>
                 <div class="loading" id="messagesLoading">Chargement...</div>
-                <div class="message-list" id="messagesList"></div>
-            </div>
+                <div id="messagesList"></div>
+            </section>
 
-            <div class="section fade-in" id="dates">
-                <h2>Idées de Dates 💭</h2>
-                <div class="message-box">
-                    <input type="text" id="todoText" placeholder="Nouvelle idée..." maxlength="100">
-                    <button class="btn" onclick="addTodo()">➕ Ajouter</button>
+            <section class="section" id="dates">
+                <h2>Idées de Dates</h2>
+                <div class="input-group">
+                    <input type="text" id="todoText" placeholder="Nouvelle idée...">
+                    <button class="btn" onclick="addTodo()">Ajouter</button>
                 </div>
                 <div class="loading" id="todosLoading">Chargement...</div>
                 <div id="todoList"></div>
-            </div>
+            </section>
         </div>
 
         <!-- Souvenirs -->
-        <div class="section section-full fade-in" id="souvenirs">
-            <h2>Nos Souvenirs 📸</h2>
-            <div class="message-box">
-                <input type="text" id="memoryTitle" placeholder="Titre du souvenir..." maxlength="50">
+        <section class="section" id="souvenirs">
+            <h2>Nos Souvenirs</h2>
+            <div class="input-group">
+                <input type="text" id="memoryTitle" placeholder="Titre du souvenir...">
                 <input type="date" id="memoryDate">
-                <textarea id="memoryDesc" placeholder="Décris ce souvenir..." style="min-height: 80px;"></textarea>
-                <button class="btn" onclick="addMemory()">✨ Ajouter le souvenir</button>
+                <textarea id="memoryDesc" placeholder="Décris ce souvenir..."></textarea>
+                <button class="btn" onclick="addMemory()">Ajouter le souvenir</button>
             </div>
             <div class="loading" id="memoriesLoading">Chargement...</div>
-            <div class="gallery" id="memoriesList"></div>
-        </div>
+            <div class="memory-grid" id="memoriesList"></div>
+        </section>
 
         <!-- Événements -->
-        <div class="section section-full fade-in" id="evenements">
-            <h2>Nos Événements Importants 🎉</h2>
-            <div class="message-box">
-                <input type="text" id="eventTitle" placeholder="Titre de l'événement..." maxlength="50">
+        <section class="section" id="evenements">
+            <h2>Nos Événements</h2>
+            <div class="input-group">
+                <input type="text" id="eventTitle" placeholder="Titre de l'événement...">
                 <input type="date" id="eventDate">
-                <button class="btn" onclick="addEvent()">🎊 Ajouter</button>
+                <button class="btn" onclick="addEvent()">Ajouter</button>
             </div>
             <div class="loading" id="eventsLoading">Chargement...</div>
             <div id="eventsList"></div>
-        </div>
+        </section>
     </div>
 
     <footer>
-        <p>✨ Fait avec tout mon amour ❤️</p>
-        <p>Pour toi, aujourd'hui et toujours 💕</p>
+        <p>✨ Créé avec amour pour toi ✨</p>
+        <p>© 2025 - Notre histoire continue...</p>
     </footer>
 
     <!-- Firebase SDK -->
@@ -724,10 +895,10 @@
         try {
             app = initializeApp(firebaseConfig);
             database = getDatabase(app);
-            showStatus('✅ Connecté avec succès !', 'success');
+            showStatus('Connecté avec succès', 'success');
             loadData();
         } catch (error) {
-            showStatus('❌ Erreur de connexion', 'error');
+            showStatus('Erreur de connexion', 'error');
             console.error('Erreur Firebase:', error);
         }
 
@@ -742,7 +913,10 @@
         }
 
         function loadData() {
-            loadStartDate();
+            // Date fixe de votre rencontre - MODIFIEZ CETTE DATE
+            const dateDeRencontre = '2024-12-05'; // Format: AAAA-MM-JJ
+            updateDaysCounter(dateDeRencontre);
+            
             loadMessages();
             loadMemories();
             loadEvents();
@@ -750,33 +924,11 @@
         }
 
         function loadStartDate() {
-            const startDateRef = ref(database, 'relationData/startDate');
-            onValue(startDateRef, (snapshot) => {
-                const date = snapshot.val();
-                if (date) {
-                    document.getElementById('startDate').value = date;
-                    updateDaysCounter(date);
-                } else {
-                    document.getElementById('daysTogether').textContent = "0";
-                }
-            });
+            // Fonction supprimée - date fixe maintenant
         }
 
         window.saveStartDate = async function() {
-            const dateInput = document.getElementById('startDate').value;
-            if (!dateInput) {
-                showStatus('⚠️ Veuillez sélectionner une date', 'error');
-                return;
-            }
-
-            try {
-                const startDateRef = ref(database, 'relationData/startDate');
-                await set(startDateRef, dateInput);
-                showStatus('💾 Date sauvegardée !', 'success');
-                updateDaysCounter(dateInput);
-            } catch (error) {
-                showStatus('❌ Erreur', 'error');
-            }
+            // Fonction supprimée - date fixe maintenant
         };
 
         function updateDaysCounter(startDate) {
@@ -791,7 +943,7 @@
                 count++;
                 counterEl.textContent = count;
                 if (count >= diffDays) clearInterval(interval);
-            }, 15);
+            }, 20);
 
             if (diffDays < 0) {
                 counterEl.textContent = "0";
@@ -817,7 +969,7 @@
 
                     messagesArray.forEach(msg => {
                         const messageDiv = document.createElement('div');
-                        messageDiv.className = 'message-item';
+                        messageDiv.className = 'message-card';
                         
                         const date = new Date(msg.timestamp);
                         const dateStr = date.toLocaleDateString('fr-FR', {
@@ -829,13 +981,13 @@
                         });
 
                         messageDiv.innerHTML = `
-                            <div class="message-date">💖 ${msg.author} - ${dateStr}</div>
+                            <div class="message-author">💖 ${msg.author} · ${dateStr}</div>
                             <div class="message-text">${msg.text}</div>
                         `;
                         messagesList.appendChild(messageDiv);
                     });
                 } else {
-                    messagesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun message pour le moment 💌</p>';
+                    messagesList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucun message pour le moment</p>';
                 }
             });
         }
@@ -845,7 +997,7 @@
             const text = document.getElementById('messageText').value.trim();
 
             if (!author || !text) {
-                showStatus('⚠️ Remplissez tous les champs', 'error');
+                showStatus('Remplissez tous les champs', 'error');
                 return;
             }
 
@@ -860,9 +1012,9 @@
                 });
 
                 document.getElementById('messageText').value = '';
-                showStatus('💌 Message envoyé !', 'success');
+                showStatus('Message envoyé !', 'success');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -904,7 +1056,7 @@
                         memoriesList.appendChild(memoryDiv);
                     });
                 } else {
-                    memoriesList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun souvenir 📸</p>';
+                    memoriesList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucun souvenir</p>';
                 }
             });
         }
@@ -915,7 +1067,7 @@
             const desc = document.getElementById('memoryDesc').value.trim();
 
             if (!title || !date || !desc) {
-                showStatus('⚠️ Remplissez tous les champs', 'error');
+                showStatus('Remplissez tous les champs', 'error');
                 return;
             }
 
@@ -933,9 +1085,9 @@
                 document.getElementById('memoryTitle').value = '';
                 document.getElementById('memoryDate').value = '';
                 document.getElementById('memoryDesc').value = '';
-                showStatus('✨ Souvenir ajouté !', 'success');
+                showStatus('Souvenir ajouté !', 'success');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -945,9 +1097,9 @@
             try {
                 const memoryRef = ref(database, `memories/${memoryId}`);
                 await set(memoryRef, null);
-                showStatus('🗑️ Souvenir supprimé', 'info');
+                showStatus('Souvenir supprimé', 'info');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -970,7 +1122,7 @@
 
                     eventsArray.forEach(event => {
                         const eventDiv = document.createElement('div');
-                        eventDiv.className = 'event-item';
+                        eventDiv.className = 'event-card';
                         
                         const eventDate = new Date(event.date);
                         const today = new Date();
@@ -979,11 +1131,11 @@
                         
                         let countdownText = '';
                         if (diffDays > 0) {
-                            countdownText = `Dans ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
+                            countdownText = `${diffDays}j`;
                         } else if (diffDays === 0) {
-                            countdownText = "Aujourd'hui ! 🎉";
+                            countdownText = "Aujourd'hui !";
                         } else {
-                            countdownText = `Il y a ${Math.abs(diffDays)} jour${Math.abs(diffDays) > 1 ? 's' : ''}`;
+                            countdownText = `-${Math.abs(diffDays)}j`;
                         }
 
                         const dateStr = eventDate.toLocaleDateString('fr-FR', {
@@ -993,7 +1145,7 @@
                         });
 
                         eventDiv.innerHTML = `
-                            <div class="event-info">
+                            <div>
                                 <div class="event-title">${event.title}</div>
                                 <div class="event-date">📅 ${dateStr}</div>
                             </div>
@@ -1003,7 +1155,7 @@
                         eventsList.appendChild(eventDiv);
                     });
                 } else {
-                    eventsList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucun événement 🎊</p>';
+                    eventsList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucun événement</p>';
                 }
             });
         }
@@ -1013,7 +1165,7 @@
             const date = document.getElementById('eventDate').value;
 
             if (!title || !date) {
-                showStatus('⚠️ Remplissez tous les champs', 'error');
+                showStatus('Remplissez tous les champs', 'error');
                 return;
             }
 
@@ -1029,9 +1181,9 @@
 
                 document.getElementById('eventTitle').value = '';
                 document.getElementById('eventDate').value = '';
-                showStatus('🎊 Événement ajouté !', 'success');
+                showStatus('Événement ajouté !', 'success');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -1041,9 +1193,9 @@
             try {
                 const eventRef = ref(database, `events/${eventId}`);
                 await set(eventRef, null);
-                showStatus('🗑️ Événement supprimé', 'info');
+                showStatus('Événement supprimé', 'info');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -1066,7 +1218,7 @@
 
                     todosArray.forEach(todo => {
                         const div = document.createElement('div');
-                        div.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+                        div.className = `todo-card ${todo.completed ? 'completed' : ''}`;
                         div.innerHTML = `
                             <input type="checkbox" class="todo-checkbox" 
                                    ${todo.completed ? 'checked' : ''} 
@@ -1077,7 +1229,7 @@
                         todoList.appendChild(div);
                     });
                 } else {
-                    todoList.innerHTML = '<p style="text-align: center; opacity: 0.8;">Aucune idée 💭</p>';
+                    todoList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucune idée</p>';
                 }
             });
         }
@@ -1085,7 +1237,7 @@
         window.addTodo = async function() {
             const text = document.getElementById('todoText').value.trim();
             if (!text) {
-                showStatus('⚠️ Écrivez une idée', 'error');
+                showStatus('Écrivez une idée', 'error');
                 return;
             }
 
@@ -1098,9 +1250,9 @@
                     timestamp: Date.now()
                 });
                 document.getElementById('todoText').value = '';
-                showStatus('✅ Idée ajoutée !', 'success');
+                showStatus('Idée ajoutée !', 'success');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
@@ -1116,28 +1268,13 @@
             if (!confirm('Supprimer cette idée ?')) return;
             try {
                 await set(ref(database, `todos/${id}`), null);
-                showStatus('🗑️ Idée supprimée', 'info');
+                showStatus('Idée supprimée', 'info');
             } catch (error) {
-                showStatus('❌ Erreur', 'error');
+                showStatus('Erreur', 'error');
             }
         };
 
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDelay = Math.random() * 2 + 's';
-            heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
-            document.body.appendChild(heart);
-            
-            setTimeout(() => heart.remove(), 8000);
-        }
-
-        setInterval(createHeart, 2000);
-        setInterval(loadEvents, 3600000);
-
-        // Menu burger toggle
+        // Menu burger
         const burger = document.getElementById('burger');
         const navLinks = document.getElementById('navLinks');
 
@@ -1146,31 +1283,29 @@
             navLinks.classList.toggle('active');
         });
 
-        // Fermer le menu au clic sur un lien
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
                 
-                // Fermer le menu burger
                 burger.classList.remove('active');
                 navLinks.classList.remove('active');
                 
-                // Scroll vers la section
                 if (targetElement) {
                     targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
 
-        // Fermer le menu si on clique ailleurs
         document.addEventListener('click', (e) => {
             if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
                 burger.classList.remove('active');
                 navLinks.classList.remove('active');
             }
         });
+
+        setInterval(loadEvents, 3600000);
     </script>
 </body>
 </html>
