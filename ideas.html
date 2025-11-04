@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Idées de Dates 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF1654;
+            --secondary: #247BA0;
+            --accent: #F3FFBD;
+            --dark: #1E1E24;
+            --light: #F7F7FF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Fond animé */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.8;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 22, 84, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(36, 123, 160, 0.4) 0%, transparent 50%);
+            animation: bgRotate 20s linear infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particules */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 15s infinite;
+            z-index: 1;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(30px);
+            padding: 20px 50px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FF1654, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-back {
+            background: linear-gradient(135deg, #FF1654, #247BA0);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 22, 84, 0.5);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 40px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 22, 84, 0.5)); }
+            50% { filter: drop-shadow(0 0 40px rgba(255, 22, 84, 0.8)); }
+        }
+
+        .page-header p {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        /* Section Ajout */
+        .add-section {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: visible;
+        }
+
+        .add-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2em;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #fff, #F3FFBD);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .input-group input {
+            flex: 1;
+            min-width: 250px;
+            padding: 16px 25px;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 1em;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.95);
+            color: #0a0a0a;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #FF1654;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 30px rgba(255, 22, 84, 0.3);
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #FF1654, #247BA0);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.05em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 30px rgba(255, 22, 84, 0.4);
+            white-space: nowrap;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255, 22, 84, 0.6);
+        }
+
+        /* Catégories */
+        .categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+            font-weight: 500;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(135deg, #FF1654, #247BA0);
+            border-color: #FF1654;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 22, 84, 0.4);
+        }
+
+        /* Grille d'idées */
+        .ideas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .idea-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .idea-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 22, 84, 0.2), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .idea-card:hover::before {
+            opacity: 1;
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .idea-card:hover {
+            transform: translateY(-10px);
+            border-color: #FF1654;
+            box-shadow: 0 20px 60px rgba(255, 22, 84, 0.4);
+        }
+
+        .idea-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 20px rgba(255, 22, 84, 0.6));
+        }
+
+        .idea-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #F3FFBD;
+        }
+
+        .idea-category {
+            font-size: 0.85em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .idea-desc {
+            font-size: 1em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .idea-actions {
+            display: flex;
+            gap: 10px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-done {
+            flex: 1;
+            background: rgba(76, 175, 80, 0.3);
+            border: 2px solid rgba(76, 175, 80, 0.6);
+            color: #4caf50;
+            padding: 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-done:hover {
+            background: rgba(76, 175, 80, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn-delete {
+            background: rgba(244, 67, 54, 0.3);
+            border: 2px solid rgba(244, 67, 54, 0.6);
+            color: #f44336;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+        }
+
+        .btn-delete:hover {
+            background: rgba(244, 67, 54, 0.5);
+            transform: scale(1.1);
+        }
+
+        .idea-card.done {
+            opacity: 0.6;
+            border-color: rgba(76, 175, 80, 0.5);
+        }
+
+        .idea-card.done .idea-title {
+            text-decoration: line-through;
+        }
+
+        /* Status */
+        .status {
+            text-align: center;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            animation: slideDown 0.5s ease;
+            border: 2px solid;
+        }
+
+        .status.success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: rgba(76, 175, 80, 0.6);
+            color: #4caf50;
+        }
+
+        .status.error {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: rgba(244, 67, 54, 0.6);
+            color: #f44336;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 25px;
+            }
+
+            .container {
+                padding: 100px 20px 60px;
+            }
+
+            .page-header h1 {
+                font-size: 2.5em;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-group input {
+                width: 100%;
+                min-width: 100%;
+            }
+
+            .btn-add {
+                width: 100%;
+            }
+
+            .ideas-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Particules -->
+    <script>
+        for(let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            document.body.appendChild(particle);
+        }
+    </script>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">Nos Idées de Dates</div>
+        <a href="index.html" class="btn-back">← Retour</a>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <h1>Nos Idées de Rendez-vous 💕</h1>
+            <p>Toutes nos activités à faire ensemble</p>
+        </div>
+
+        <div id="statusMessage" class="status" style="display: none;"></div>
+
+        <!-- Section Ajout -->
+        <div class="add-section">
+            <h2>Ajouter une nouvelle idée ✨</h2>
+            <div class="input-group">
+                <input type="text" id="ideaTitle" placeholder="Nom de l'activité...">
+                <select id="ideaCategory" style="padding: 16px 25px; border-radius: 15px; border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.95); color: #0a0a0a; font-size: 1em; cursor: pointer;">
+                    <option value="romantique">💕 Romantique</option>
+                    <option value="aventure">🏃 Aventure</option>
+                    <option value="detente">🧘 Détente</option>
+                    <option value="culture">🎭 Culture</option>
+                    <option value="gastronomie">🍽️ Gastronomie</option>
+                    <option value="sport">⚽ Sport</option>
+                    <option value="maison">🏠 À la maison</option>
+                </select>
+                <button class="btn-add" onclick="addIdea()">➕ Ajouter</button>
+            </div>
+        </div>
+
+        <!-- Filtres par catégorie -->
+        <div class="categories">
+            <button class="category-btn active" data-category="all" onclick="filterCategory('all')">Toutes</button>
+            <button class="category-btn" data-category="romantique" onclick="filterCategory('romantique')">💕 Romantique</button>
+            <button class="category-btn" data-category="aventure" onclick="filterCategory('aventure')">🏃 Aventure</button>
+            <button class="category-btn" data-category="detente" onclick="filterCategory('detente')">🧘 Détente</button>
+            <button class="category-btn" data-category="culture" onclick="filterCategory('culture')">🎭 Culture</button>
+            <button class="category-btn" data-category="gastronomie" onclick="filterCategory('gastronomie')">🍽️ Gastronomie</button>
+            <button class="category-btn" data-category="sport" onclick="filterCategory('sport')">⚽ Sport</button>
+            <button class="category-btn" data-category="maison" onclick="filterCategory('maison')">🏠 Maison</button>
+        </div>
+
+        <!-- Grille d'idées -->
+        <div class="loading" id="ideasLoading">Chargement...</div>
+        <div class="ideas-grid" id="ideasGrid"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, push, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBlnTrqwUyEL2c-wymJXxKL05N2Twcwv4w",
+            authDomain: "site-amour-92308.firebaseapp.com",
+            databaseURL: "https://site-amour-92308-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "site-amour-92308",
+            storageBucket: "site-amour-92308.firebasestorage.app",
+            messagingSenderId: "607113419155",
+            appId: "1:607113419155:web:6851a0fdc2c0fd38337066"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        let currentFilter = 'all';
+        let allIdeas = [];
+
+        // Idées pré-remplies
+        const defaultIdeas = [
+            { title: "Dîner aux chandelles", category: "romantique", icon: "🕯️", done: false },
+            { title: "Pique-nique au parc", category: "romantique", icon: "🧺", done: false },
+            { title: "Soirée cinéma maison", category: "maison", icon: "🎬", done: false },
+            { title: "Randonnée en montagne", category: "aventure", icon: "⛰️", done: false },
+            { title: "Spa et massage", category: "detente", icon: "💆", done: false },
+            { title: "Musée ou exposition", category: "culture", icon: "🎨", done: false },
+            { title: "Restaurant gastronomique", category: "gastronomie", icon: "🍷", done: false },
+            { title: "Match ou événement sportif", category: "sport", icon: "🏟️", done: false },
+            { title: "Cours de cuisine ensemble", category: "gastronomie", icon: "👨‍🍳", done: false },
+            { title: "Balade au bord de l'eau", category: "romantique", icon: "🌊", done: false },
+            { title: "Escape game", category: "aventure", icon: "🔐", done: false },
+            { title: "Yoga ou méditation", category: "detente", icon: "🧘", done: false }
+        ];
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+            statusEl.style.display = 'block';
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 4000);
+        }
+
+        async function initializeDefaultIdeas() {
+            const ideasRef = ref(database, 'dateIdeas');
+            const snapshot = await get(ideasRef);
+            
+            if (!snapshot.exists()) {
+                for (const idea of defaultIdeas) {
+                    const newRef = push(ideasRef);
+                    await set(newRef, {
+                        ...idea,
+                        timestamp: Date.now()
+                    });
+                }
+            }
+        }
+
+        function loadIdeas() {
+            document.getElementById('ideasLoading').style.display = 'block';
+            const ideasRef = ref(database, 'dateIdeas');
+            
+            onValue(ideasRef, (snapshot) => {
+                document.getElementById('ideasLoading').style.display = 'none';
+                const ideas = snapshot.val();
+                const grid = document.getElementById('ideasGrid');
+                
+                if (ideas) {
+                    allIdeas = Object.entries(ideas).map(([key, value]) => ({
+                        id: key,
+                        ...value
+                    }));
+                    displayIdeas(allIdeas);
+                } else {
+                    grid.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 40px; grid-column: 1/-1;">Aucune idée pour le moment. Ajoutez-en une ! 💡</p>';
+                }
+            });
+        }
+
+        function displayIdeas(ideas) {
+            const grid = document.getElementById('ideasGrid');
+            grid.innerHTML = '';
+
+            const filteredIdeas = currentFilter === 'all' 
+                ? ideas 
+                : ideas.filter(idea => idea.category === currentFilter);
+
+            if (filteredIdeas.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 40px; grid-column: 1/-1;">Aucune idée dans cette catégorie</p>';
+                return;
+            }
+
+            filteredIdeas.forEach(idea => {
+                const card = document.createElement('div');
+                card.className = `idea-card ${idea.done ? 'done' : ''}`;
+                card.innerHTML = `
+                    <div class="idea-icon">${idea.icon || '💡'}</div>
+                    <div class="idea-category">${getCategoryLabel(idea.category)}</div>
+                    <div class="idea-title">${idea.title}</div>
+                    <div class="idea-actions">
+                        <button class="btn-done" onclick="toggleDone('${idea.id}', ${!idea.done})">
+                            ${idea.done ? '↩️ Pas fait' : '✓ Fait !'}
+                        </button>
+                        <button class="btn-delete" onclick="deleteIdea('${idea.id}')">🗑️</button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function getCategoryLabel(category) {
+            const labels = {
+                romantique: '💕 Romantique',
+                aventure: '🏃 Aventure',
+                detente: '🧘 Détente',
+                culture: '🎭 Culture',
+                gastronomie: '🍽️ Gastronomie',
+                sport: '⚽ Sport',
+                maison: '🏠 Maison'
+            };
+            return labels[category] || category;
+        }
+
+        window.addIdea = async function() {
+            const title = document.getElementById('ideaTitle').value.trim();
+            const category = document.getElementById('ideaCategory').value;
+
+            if (!title) {
+                showStatus('Écrivez une idée', 'error');
+                return;
+            }
+
+            const icons = {
+                romantique: '💕',
+                aventure: '🏃',
+                detente: '🧘',
+                culture: '🎭',
+                gastronomie: '🍽️',
+                sport: '⚽',
+                maison: '🏠'
+            };
+
+            try {
+                const ideasRef = ref(database, 'dateIdeas');
+                const newRef = push(ideasRef);
+                await set(newRef, {
+                    title: title,
+                    category: category,
+                    icon: icons[category] || '💡',
+                    done: false,
+                    timestamp: Date.now()
+                });
+                document.getElementById('ideaTitle').value = '';
+                showStatus('Idée ajoutée !', 'success');
+            } catch (error) {
+                showStatus('Erreur', 'error');
+            }
+        };
+
+        window.toggleDone = async function(id, done) {
+            try {
+                await set(ref(database, `dateIdeas/${id}/done`), done);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        window.deleteIdea = async function(id) {
+            if (!confirm('Supprimer cette idée ?')) return;
+            try {
+                await set(ref(database, `dateIdeas/${id}`), null);
+                showStatus('Idée supprimée', 'success');
+            } catch (error) {
+                showStatus('Erreur', 'error');
+            }
+        };
+
+        window.filterCategory = function(category) {
+            currentFilter = category;
+            displayIdeas(allIdeas);
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+        };
+
+        loadIdeas();
+    </script>
+</body>
+</html>
