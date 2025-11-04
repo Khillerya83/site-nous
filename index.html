@@ -589,28 +589,185 @@
             text-align: right;
         }
 
-        /* Todo List Premium */
-        .todo-card {
+        /* Timeline Horizontale */
+        .timeline-section {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-container {
+            position: relative;
+            overflow-x: auto;
+            overflow-y: visible;
+            padding: 60px 0 80px;
+            margin-top: 30px;
+        }
+
+        .timeline-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .timeline-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .timeline-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #FF1654, #247BA0);
+            border-radius: 10px;
+        }
+
+        .timeline-line {
+            position: relative;
+            height: 4px;
+            background: linear-gradient(90deg, #FF1654, #247BA0, #F3FFBD);
+            margin: 0 auto;
+            min-width: max-content;
+        }
+
+        .timeline-items {
+            display: flex;
+            gap: 80px;
+            position: relative;
+            min-width: max-content;
+            padding: 0 40px;
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 280px;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: #FF1654;
+            border: 5px solid rgba(10, 10, 10, 0.9);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 22, 84, 0.8);
+            z-index: 10;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 22, 84, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255, 22, 84, 1);
+            }
+        }
+
+        .timeline-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-10px);
+            border-color: #FF1654;
+            box-shadow: 0 20px 50px rgba(255, 22, 84, 0.4);
+        }
+
+        .timeline-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px rgba(255, 22, 84, 0.6));
+        }
+
+        .timeline-date {
+            font-size: 0.9em;
+            color: #FF1654;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .timeline-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #F3FFBD;
+        }
+
+        .timeline-desc {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+        }
+
+        .timeline-delete {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(244, 67, 54, 0.3);
+            border: 2px solid rgba(244, 67, 54, 0.6);
+            color: #f44336;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
             display: flex;
             align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .timeline-delete:hover {
+            background: rgba(244, 67, 54, 0.6);
+            transform: scale(1.2) rotate(90deg);
+        }
+
+        .timeline-nav {
+            display: flex;
+            justify-content: center;
             gap: 20px;
+            margin-top: 30px;
         }
 
-        .todo-checkbox {
-            width: 28px;
-            height: 28px;
+        .timeline-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
             cursor: pointer;
-            accent-color: #FF1654;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
         }
 
-        .todo-text {
-            flex: 1;
-            font-size: 1.15em;
-        }
-
-        .todo-card.completed {
-            opacity: 0.5;
-            text-decoration: line-through;
+        .timeline-nav-btn:hover {
+            background: rgba(255, 22, 84, 0.3);
+            border-color: #FF1654;
+            transform: scale(1.05);
         }
 
         /* Delete Button Premium */
@@ -762,6 +919,86 @@
                 margin-top: 15px;
             }
         }
+        .timeline {
+  position: relative;
+  margin: 40px auto;
+  padding-left: 25px;
+  border-left: 3px solid rgba(255, 143, 168, 0.6);
+  max-width: 600px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  background: linear-gradient(135deg, #ffb3c6, #ff8fa8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 143, 168, 0.7);
+}
+
+.timeline-content {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.timeline-content h3 {
+  margin-bottom: 8px;
+  color: #ff8fa8;
+}
+
+.timeline-content small {
+  display: block;
+  margin-top: 8px;
+  opacity: 0.8;
+  font-size: 0.9em;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delete-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(255, 80, 80, 0.8);
+  color: white;
+  border: none;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 50, 50, 1);
+  transform: scale(1.1);
+}
+
     </style>
 </head>
 <body>
@@ -790,9 +1027,9 @@
         <div class="nav-links" id="navLinks">
             <a href="#compteur" class="nav-link">Compteur</a>
             <a href="#messages" class="nav-link">Messages</a>
-            <a href="#souvenirs" class="nav-link">Souvenirs</a>
-            <a href="#evenements" class="nav-link">Événements</a>
-            <a href="#dates" class="nav-link">Idées</a>
+            <a href="#souvenirs" class="nav-link">Evenements</a>
+            <button class="nav-link" style="background: linear-gradient(135deg, #FF1654, #247BA0); padding: 10px 20px; border-radius: 25px; border: none; cursor: pointer;" onclick="window.location.href='souvenirs.html'">souvenirs</button>
+            <button class="nav-link" style="background: linear-gradient(135deg, #FF1654, #247BA0); padding: 10px 20px; border-radius: 25px; border: none; cursor: pointer;" onclick="window.location.href='ideas.html'">💡 Idées</button>
         </div>
     </nav>
 
@@ -821,7 +1058,7 @@
             </div>
         </section>
 
-        <!-- Messages et Idées -->
+        <!-- Messages et Souvenirs -->
         <div class="grid">
             <section class="section" id="messages">
                 <h2>Messages d'Amour</h2>
@@ -834,41 +1071,21 @@
                 <div id="messagesList"></div>
             </section>
 
-            <section class="section" id="dates">
-                <h2>Idées de Dates</h2>
-                <div class="input-group">
-                    <input type="text" id="todoText" placeholder="Nouvelle idée...">
-                    <button class="btn" onclick="addTodo()">Ajouter</button>
-                </div>
-                <div class="loading" id="todosLoading">Chargement...</div>
-                <div id="todoList"></div>
-            </section>
-        </div>
-
         <!-- Souvenirs -->
         <section class="section" id="souvenirs">
-            <h2>Nos Souvenirs</h2>
+            <h2>Nos Evenements</h2>
             <div class="input-group">
-                <input type="text" id="memoryTitle" placeholder="Titre du souvenir...">
+                <input type="text" id="memoryTitle" placeholder="Titre de l'évenement...">
                 <input type="date" id="memoryDate">
-                <textarea id="memoryDesc" placeholder="Décris ce souvenir..."></textarea>
-                <button class="btn" onclick="addMemory()">Ajouter le souvenir</button>
+                <textarea id="memoryDesc" placeholder="Décris cette évenement..."></textarea>
+                <button class="btn" onclick="addMemory()">Ajouter l'évenement</button>
             </div>
             <div class="loading" id="memoriesLoading">Chargement...</div>
             <div class="memory-grid" id="memoriesList"></div>
         </section>
 
-        <!-- Événements -->
-        <section class="section" id="evenements">
-            <h2>Nos Événements</h2>
-            <div class="input-group">
-                <input type="text" id="eventTitle" placeholder="Titre de l'événement...">
-                <input type="date" id="eventDate">
-                <button class="btn" onclick="addEvent()">Ajouter</button>
-            </div>
-            <div class="loading" id="eventsLoading">Chargement...</div>
-            <div id="eventsList"></div>
-        </section>
+        
+
     </div>
 
     <footer>
@@ -879,7 +1096,7 @@
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getDatabase, ref, set, push, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+        import { getDatabase, ref, set, push, onValue, get } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBlnTrqwUyEL2c-wymJXxKL05N2Twcwv4w",
@@ -913,14 +1130,13 @@
         }
 
         function loadData() {
-            // Date fixe de votre rencontre - MODIFIEZ CETTE DATE
-            const dateDeRencontre = '2024-12-05'; // Format: AAAA-MM-JJ
+            // Date fixe de votre rencontre - Modifiez cette date
+            const dateDeRencontre = '2024-12-05'; // 5 décembre 2024
             updateDaysCounter(dateDeRencontre);
             
             loadMessages();
             loadMemories();
-            loadEvents();
-            loadTodos();
+            loadTimeline();
         }
 
         function loadStartDate() {
@@ -933,19 +1149,24 @@
 
         function updateDaysCounter(startDate) {
             const start = new Date(startDate);
+            start.setHours(0, 0, 0, 0); // Réinitialiser à minuit
+            
             const today = new Date();
+            today.setHours(0, 0, 0, 0); // Réinitialiser à minuit
+            
             const diffTime = today.getTime() - start.getTime();
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
             const counterEl = document.getElementById('daysTogether');
-            let count = 0;
-            const interval = setInterval(() => {
-                count++;
-                counterEl.textContent = count;
-                if (count >= diffDays) clearInterval(interval);
-            }, 20);
-
-            if (diffDays < 0) {
+            
+            if (diffDays >= 0) {
+                let count = 0;
+                const interval = setInterval(() => {
+                    count++;
+                    counterEl.textContent = count;
+                    if (count >= diffDays) clearInterval(interval);
+                }, 20);
+            } else {
                 counterEl.textContent = "0";
             }
         }
@@ -992,40 +1213,53 @@
             });
         }
 
-        window.addMessage = async function() {
-            const author = document.getElementById('authorName').value.trim();
-            const text = document.getElementById('messageText').value.trim();
+window.addMessage = async function() {
+  const author = document.getElementById('authorName').value.trim();
+  const text = document.getElementById('messageText').value.trim();
 
-            if (!author || !text) {
-                showStatus('Remplissez tous les champs', 'error');
-                return;
-            }
+  if (!author || !text) {
+    showStatus('Remplissez tous les champs', 'error');
+    return;
+  }
 
-            try {
-                const messagesRef = ref(database, 'messages');
-                const newMessageRef = push(messagesRef);
-                
-                await set(newMessageRef, {
-                    author: author,
-                    text: text,
-                    timestamp: Date.now()
-                });
+  try {
+    const messagesRef = ref(database, 'messages');
+    const newMessageRef = push(messagesRef);
 
-                document.getElementById('messageText').value = '';
-                showStatus('Message envoyé !', 'success');
-            } catch (error) {
-                showStatus('Erreur', 'error');
-            }
-        };
+    await set(newMessageRef, {
+      author: author,
+      text: text,
+      timestamp: Date.now()
+    });
+
+    // Vide les champs après envoi
+    document.getElementById('messageText').value = '';
+    document.getElementById('authorName').value = '';
+
+    showStatus('Message envoyé !', 'success');
+  } catch (error) {
+    console.error('Erreur lors de l\'envoi du message :', error);
+    showStatus('Erreur', 'error');
+  }
+};
+
+
+
 
         function loadMemories() {
-            document.getElementById('memoriesLoading').style.display = 'block';
+            const loadingEl = document.getElementById('memoriesLoading');
+            if (loadingEl) loadingEl.style.display = 'block';
+            
             const memoriesRef = ref(database, 'memories');
             
             onValue(memoriesRef, (snapshot) => {
-                document.getElementById('memoriesLoading').style.display = 'none';
+                if (loadingEl) loadingEl.style.display = 'none';
+                
                 const memories = snapshot.val();
                 const memoriesList = document.getElementById('memoriesList');
+                
+                if (!memoriesList) return;
+                
                 memoriesList.innerHTML = '';
 
                 if (memories) {
@@ -1103,174 +1337,108 @@
             }
         };
 
-        function loadEvents() {
-            document.getElementById('eventsLoading').style.display = 'block';
-            const eventsRef = ref(database, 'events');
+        // Timeline Horizontale
+        function loadTimeline() {
+            const loadingEl = document.getElementById('timelineLoading');
+            if (loadingEl) loadingEl.style.display = 'block';
             
-            onValue(eventsRef, (snapshot) => {
-                document.getElementById('eventsLoading').style.display = 'none';
-                const events = snapshot.val();
-                const eventsList = document.getElementById('eventsList');
-                eventsList.innerHTML = '';
+            const timelineRef = ref(database, 'timeline');
+            
+            onValue(timelineRef, (snapshot) => {
+                if (loadingEl) loadingEl.style.display = 'none';
+                
+                const timeline = snapshot.val();
+                const timelineItems = document.getElementById('timelineItems');
+                
+                if (!timelineItems) return;
+                
+                timelineItems.innerHTML = '';
 
-                if (events) {
-                    const eventsArray = Object.entries(events).map(([key, value]) => ({
+                if (timeline) {
+                    const timelineArray = Object.entries(timeline).map(([key, value]) => ({
                         id: key,
                         ...value
                     }));
-                    eventsArray.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    timelineArray.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-                    eventsArray.forEach(event => {
-                        const eventDiv = document.createElement('div');
-                        eventDiv.className = 'event-card';
+                    timelineArray.forEach((item, index) => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'timeline-item';
+                        itemDiv.style.animationDelay = `${index * 0.1}s`;
                         
-                        const eventDate = new Date(event.date);
-                        const today = new Date();
-                        const diffTime = eventDate - today;
-                        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                        
-                        let countdownText = '';
-                        if (diffDays > 0) {
-                            countdownText = `${diffDays}j`;
-                        } else if (diffDays === 0) {
-                            countdownText = "Aujourd'hui !";
-                        } else {
-                            countdownText = `-${Math.abs(diffDays)}j`;
-                        }
-
-                        const dateStr = eventDate.toLocaleDateString('fr-FR', {
+                        const date = new Date(item.date);
+                        const dateStr = date.toLocaleDateString('fr-FR', {
                             day: 'numeric',
-                            month: 'long',
+                            month: 'short',
                             year: 'numeric'
                         });
 
-                        eventDiv.innerHTML = `
-                            <div>
-                                <div class="event-title">${event.title}</div>
-                                <div class="event-date">📅 ${dateStr}</div>
+                        const icons = ['💕', '🌟', '✨', '💖', '🎉', '💝', '🌹', '💫', '🎊', '💗'];
+                        const icon = icons[index % icons.length];
+
+                        itemDiv.innerHTML = `
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-card">
+                                <button class="timeline-delete" onclick="deleteTimelineItem('${item.id}')">×</button>
+                                <div class="timeline-icon">${icon}</div>
+                                <div class="timeline-date">${dateStr}</div>
+                                <div class="timeline-title">${item.title}</div>
+                                <div class="timeline-desc">${item.description}</div>
                             </div>
-                            <div class="countdown">${countdownText}</div>
-                            <button class="delete-btn" onclick="deleteEvent('${event.id}')">×</button>
                         `;
-                        eventsList.appendChild(eventDiv);
+                        timelineItems.appendChild(itemDiv);
                     });
                 } else {
-                    eventsList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucun événement</p>';
+                    timelineItems.innerHTML = '<p style="text-align: center; opacity: 0.8; padding: 40px;">Aucun moment ajouté pour le moment ✨</p>';
                 }
             });
         }
 
-        window.addEvent = async function() {
-            const title = document.getElementById('eventTitle').value.trim();
-            const date = document.getElementById('eventDate').value;
+        window.addTimelineItem = async function() {
+            const title = document.getElementById('timelineTitle').value.trim();
+            const date = document.getElementById('timelineDate').value;
+            const desc = document.getElementById('timelineDesc').value.trim();
 
-            if (!title || !date) {
+            if (!title || !date || !desc) {
                 showStatus('Remplissez tous les champs', 'error');
                 return;
             }
 
             try {
-                const eventsRef = ref(database, 'events');
-                const newEventRef = push(eventsRef);
-                
-                await set(newEventRef, {
+                const timelineRef = ref(database, 'timeline');
+                const newRef = push(timelineRef);
+                await set(newRef, {
                     title: title,
                     date: date,
+                    description: desc,
                     timestamp: Date.now()
                 });
-
-                document.getElementById('eventTitle').value = '';
-                document.getElementById('eventDate').value = '';
-                showStatus('Événement ajouté !', 'success');
+                document.getElementById('timelineTitle').value = '';
+                document.getElementById('timelineDate').value = '';
+                document.getElementById('timelineDesc').value = '';
+                showStatus('Moment ajouté à la timeline !', 'success');
             } catch (error) {
                 showStatus('Erreur', 'error');
             }
         };
 
-        window.deleteEvent = async function(eventId) {
-            if (!confirm('Supprimer cet événement ?')) return;
-            
+        window.deleteTimelineItem = async function(id) {
+            if (!confirm('Supprimer ce moment ?')) return;
             try {
-                const eventRef = ref(database, `events/${eventId}`);
-                await set(eventRef, null);
-                showStatus('Événement supprimé', 'info');
+                await set(ref(database, `timeline/${id}`), null);
+                showStatus('Moment supprimé', 'info');
             } catch (error) {
                 showStatus('Erreur', 'error');
             }
         };
 
-        function loadTodos() {
-            document.getElementById('todosLoading').style.display = 'block';
-            const todosRef = ref(database, 'todos');
-            
-            onValue(todosRef, (snapshot) => {
-                document.getElementById('todosLoading').style.display = 'none';
-                const todos = snapshot.val();
-                const todoList = document.getElementById('todoList');
-                todoList.innerHTML = '';
-
-                if (todos) {
-                    const todosArray = Object.entries(todos).map(([key, value]) => ({
-                        id: key,
-                        ...value
-                    }));
-                    todosArray.sort((a, b) => a.timestamp - b.timestamp);
-
-                    todosArray.forEach(todo => {
-                        const div = document.createElement('div');
-                        div.className = `todo-card ${todo.completed ? 'completed' : ''}`;
-                        div.innerHTML = `
-                            <input type="checkbox" class="todo-checkbox" 
-                                   ${todo.completed ? 'checked' : ''} 
-                                   onchange="toggleTodo('${todo.id}', this.checked)">
-                            <div class="todo-text">${todo.text}</div>
-                            <button class="delete-btn" onclick="deleteTodo('${todo.id}')">×</button>
-                        `;
-                        todoList.appendChild(div);
-                    });
-                } else {
-                    todoList.innerHTML = '<p style="text-align: center; opacity: 0.6; padding: 20px;">Aucune idée</p>';
-                }
-            });
-        }
-
-        window.addTodo = async function() {
-            const text = document.getElementById('todoText').value.trim();
-            if (!text) {
-                showStatus('Écrivez une idée', 'error');
-                return;
-            }
-
-            try {
-                const todosRef = ref(database, 'todos');
-                const newRef = push(todosRef);
-                await set(newRef, {
-                    text: text,
-                    completed: false,
-                    timestamp: Date.now()
-                });
-                document.getElementById('todoText').value = '';
-                showStatus('Idée ajoutée !', 'success');
-            } catch (error) {
-                showStatus('Erreur', 'error');
-            }
-        };
-
-        window.toggleTodo = async function(id, completed) {
-            try {
-                await set(ref(database, `todos/${id}/completed`), completed);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        window.deleteTodo = async function(id) {
-            if (!confirm('Supprimer cette idée ?')) return;
-            try {
-                await set(ref(database, `todos/${id}`), null);
-                showStatus('Idée supprimée', 'info');
-            } catch (error) {
-                showStatus('Erreur', 'error');
+        window.scrollTimeline = function(direction) {
+            const container = document.getElementById('timelineContainer');
+            const scrollAmount = 400;
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
             }
         };
 
@@ -1305,7 +1473,7 @@
             }
         });
 
-        setInterval(loadEvents, 3600000);
+        
     </script>
 </body>
 </html>
